@@ -39,7 +39,7 @@ class Reserve(models.Model):
         ('TRANSFER', 'Tranfer')
         ]
     payment_method: models.CharField = models.CharField(
-        max_length=10,
+        max_length=15,
         choices=PAYMENT_CHOICES,
         default='Check'
         )
