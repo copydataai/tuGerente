@@ -13,7 +13,6 @@ Luego que tengas ya todo el código
 ## Solucion
 1. Donde todos los procesos de registro se hace en el hotel, o en alguna parte del hotel, donde este django corriendo, solo un superuser puede crear rooms y eliminarlos. Esta solucion esta en el branch just-hotel
 2. Una API REST donde un usuario puede registrarse la habitacion y la reserva, una tabla distinta para la facturación. Esta solucion esta en el branch main
-
 3. No se elabora tanto la logica de negocio de un hotel, la gran mayoria son CRUD's para que el desarrollo haya sido rapido
 
 ## Local
@@ -32,7 +31,8 @@ make make-migrate-run
 ## EndPoints
 En la mayoria de los endpoints usan mixins, por que son requests genericas, excepto por clients que son Class APIView.
 Las requests __GET__ no requieren autentication(Token), las 
-
+### Postman 
+La collection main esta exportado en json, nombre de file main.postman_collection.json
 ### Clients
 - clients/signup/ __POST__
 
@@ -54,9 +54,11 @@ Las requests __GET__ no requieren autentication(Token), las
 ```
 
 ### Rooms
+Solo un superuser puede crear cuartos usando `make make-migrate-run` se crearan las migraciones y la insercion de rooms.
 - rooms/ __GET__
 - rooms/{id} __GET__
 ### Reserves
+Basandome en que usamos Token como authentication, el Token almacena el id del usuario,
 - reserves/ __GET__
 - reserves/{id} __GET__
 - reserves/ __POST__
