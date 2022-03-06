@@ -8,14 +8,15 @@ from django.db import models
 
 # models
 from clients.models import Client
+from bill.models import Bill
 from rooms.models import Room
 
 class Reserve(models.Model):
 
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True)
 
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-
+    bill = models.ForeignKey(Bill, on_delete=models.CASCADE, null=True)
     # DateTime
     start_date: models.DateField = models.DateField('start date of reservation')
     end_date: models.DateField = models.DateField('end date of reservation', blank=True, null=True)
@@ -44,14 +45,3 @@ class Reserve(models.Model):
         default='Check'
         )
     payment_amount: models.DecimalField = models.DecimalField(max_digits=10, decimal_places=2)
-
-
-    def save(self, *args, **kwargs):
-
-        if self.end_date:
-            # end_date & start_date: datetime.date
-            delta = self.end_date - self.start_date
-            self.days_reserved = delta.days
-            # Define price for room price * days reserved
-            self.payment_amount = round(delta.days * self.room.price, 2)
-            super(Reserve, self).save(*args, **kwargs)

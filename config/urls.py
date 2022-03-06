@@ -19,23 +19,26 @@ from django.urls.conf import include
 
 # DRF
 from rest_framework.routers import DefaultRouter
+from bill.views import BillViewSet
 
 # DRF-spectacular
 from drf_spectacular.views import SpectacularAPIView
 
 # Views
-from clients.views import ClientViewSet
+from clients.views import ClientSignUp, ClientLogin
 from reserves.views import ReserverViewSet
 from rooms.views import RoomViewSet
 
 router = DefaultRouter()
 
-router.register('clients', ClientViewSet)
 router.register('reserves', ReserverViewSet)
 router.register('rooms', RoomViewSet)
+router.register('bills', BillViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('clients/signup/', ClientSignUp.as_view()),
+    path('clients/login/', ClientLogin.as_view()),
     path('', include(router.urls)),
     path('schema/', SpectacularAPIView.as_view())
 ]

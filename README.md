@@ -14,6 +14,7 @@ Luego que tengas ya todo el código
 1. Donde todos los procesos de registro se hace en el hotel, o en alguna parte del hotel, donde este django corriendo, solo un superuser puede crear rooms y eliminarlos. Esta solucion esta en el branch just-hotel
 2. Una API REST donde un usuario puede registrarse la habitacion y la reserva, una tabla distinta para la facturación. Esta solucion esta en el branch main
 
+3. No se elabora tanto la logica de negocio de un hotel, la gran mayoria son CRUD's para que el desarrollo haya sido rapido
 
 ## Local
 
@@ -28,3 +29,50 @@ para hacer las migrations y correr en local
 make make-migrate-run
 ```
 
+## EndPoints
+En la mayoria de los endpoints usan mixins, por que son requests genericas, excepto por clients que son Class APIView.
+Las requests __GET__ no requieren autentication(Token), las 
+
+### Clients
+- clients/signup/ __POST__
+
+``` json
+{
+    "first_name": "example",
+    "last_name": "last",
+    "email": "example@email.com",
+    "password": "example123"
+}
+```
+- clients/login/ __POST__
+
+``` json
+{
+    "email": "example@email.com",
+    "password": "example123"
+}
+```
+
+### Rooms
+- rooms/ __GET__
+- rooms/{id} __GET__
+### Reserves
+- reserves/ __GET__
+- reserves/{id} __GET__
+- reserves/ __POST__
+
+``` json
+{
+    "room": 3,
+    "start_date": "2022-03-05",
+    "end_date": "2022-04-01"
+}
+```
+
+- reserves/{id} __PUT__ __PATCH__
+
+### Bills
+- bills/ __GET__
+- bills/{id} __GET__
+- bills/{id} __PUT__ __PATCH__
+En el caso de editar un bill sera para agregar el nit o dni del cliente, esta opcion es descartable.

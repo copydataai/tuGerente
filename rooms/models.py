@@ -12,6 +12,7 @@ class Room(models.Model):
         ]
     type_room = models.CharField(max_length=8, choices=TYPE_ROOM)
 
+    details = models.TextField(max_length=500, blank=True)
     # limit of the price 32767
     price = models.PositiveSmallIntegerField('price per day')
 

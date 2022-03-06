@@ -2,20 +2,21 @@
 
 # Django
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
-class Client(models.Model):
+class Client(AbstractUser):
     """Client model
     """
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    dni = models.CharField(max_length=15, unique=True)
-    country = models.CharField(
-        'country code',
-        max_length=5,
-        blank=True,
-        default='BO'
-        )
+    email = models.EmailField('email address',unique=True)
+    username = None
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
+
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
+
+    def get_full_name(self):
+        return f'{self.first_name} {self.last_name}'
